@@ -30,7 +30,7 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: python jessikoreascreener.py
 
-      - name: 결과 파일 깃허브에 올리기
+    - name: 결과 파일 깃허브에 올리기
       run: |
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
