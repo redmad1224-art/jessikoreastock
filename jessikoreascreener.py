@@ -151,9 +151,13 @@ def main():
                 results.append(res)
 
     # 결과 출력 및 저장 (이 아랫부분은 기존 코드와 동일하게 유지하세요)
+    # ... 기존 코드 중 결과 출력 부분 ...
     if results:
         df_res = pd.DataFrame(results)
         print(df_res)
+        # 아래 한 줄을 추가해서 파일로 저장하게 만듭니다!
+        df_res.to_csv("result.csv", index=False, encoding="utf-8-sig")
+        print("결과가 result.csv 파일로 저장되었습니다.")
     else:
         print("조건에 맞는 종목이 없습니다.")
 
