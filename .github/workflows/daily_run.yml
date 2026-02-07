@@ -20,6 +20,7 @@ jobs:
 
       - name: 필요한 도구 설치하기
         run: |
+          pip install pandas requests beautifulsoup4 pykrx finance-datareader
           pip install pandas requests beautifulsoup4 pykrx pandas_datareader
           # 내 코드에 필요한 다른 도구가 있다면 위에 더 추가하면 돼요!
 
