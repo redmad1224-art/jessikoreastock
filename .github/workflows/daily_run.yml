@@ -1,0 +1,27 @@
+name: 매일 스크리너 실행 로봇
+
+on:
+  schedule:
+    # 매일 아침 8시 30분(한국시간)에 실행되도록 설정했어요!
+    - cron: '30 23 * * *' 
+  workflow_dispatch: # 내가 원할 때 버튼 눌러서 바로 실행하는 기능이에요.
+
+jobs:
+  run_screener:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 내 코드 가져오기
+        uses: actions/checkout@v3
+
+      - name: 파이썬 설치하기
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 필요한 도구 설치하기
+        run: |
+          pip install pandas requests beautifulsoup4 pykrx pandas_datareader
+          # 내 코드에 필요한 다른 도구가 있다면 위에 더 추가하면 돼요!
+
+      - name: 스크리너 실행!
+        run: python "제씨_한국_돌파_스크린.py"
