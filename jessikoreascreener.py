@@ -21,7 +21,7 @@ def send_telegram_msg(message):
             print(f"텔레그램 발송 중 오류: {e}")
 
 # ================= : 기존 전략 설정 (유지) : =================
-PEAK_BALANCE = 100_000_000      
+PEAK_BALANCE = 40_000_000      
 RISK_PCT = 0.5                  
 
 def position_sizing(entry_price, stop_price):
