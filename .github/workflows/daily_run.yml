@@ -26,3 +26,10 @@ jobs:
 
       - name: 스크리너 실행!
         run: python "jessikoreascreener.py"
+      - name: 결과 파일 깃허브에 올리기
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add result.csv
+          git commit -m "매일 스캐너 결과 업데이트 ($(date +'%Y-%m-%d'))" || exit 0
+          git push
