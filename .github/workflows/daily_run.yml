@@ -24,4 +24,4 @@ jobs:
           # 내 코드에 필요한 다른 도구가 있다면 위에 더 추가하면 돼요!
 
       - name: 스크리너 실행!
-        run: python "제씨_한국_돌파_스크린.py"
+        run: python "jessikoreascreener.py"
