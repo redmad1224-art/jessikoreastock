@@ -13,7 +13,7 @@ Original file is located at
 # ============================================================
 
 # 0. 라이브러리 설치
-!pip install -U finance-datareader
+
 
 import pandas as pd
 import FinanceDataReader as fdr
