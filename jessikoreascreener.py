@@ -123,57 +123,39 @@ def analyze_stock(code, name):
 # 3. 메인 실행
 # ============================================================
 def main():
-    print("=== 돌파 스크리너 + 포지션 사이징 ===")
-    print("1 : KOSPI")
-    print("2 : KOSDAQ")
-
-    choice = input("시장 선택: ").strip()
-    market = {"1": "KOSPI", "2": "KOSDAQ"}.get(choice)
-
-    if not market:
-        print("잘못된 입력. 종료.")
-        return
-
-    universe = fdr.StockListing(market)
+    print("=== 돌파 스크리너 + 포지션 사이징 (자동 모드) ===")
+    
+    # 1. 코스피와 코스닥 종목 리스트를 한 번에 가져오기
+    print("KOSPI와 KOSDAQ 종목을 모두 가져옵니다...")
+    kospi = fdr.StockListing('KOSPI')
+    kosdaq = fdr.StockListing('KOSDAQ')
+    
+    # 두 리스트를 하나로 합칩니다.
+    universe = pd.concat([kospi, kosdaq])
+    
     tasks = [(row['Code'], row['Name']) for _, row in universe.iterrows()]
     results = []
 
-    print(f"{market} {len(tasks)}개 종목 분석 시작")
+    print(f"총 {len(tasks)}개 종목 분석 시작 (코스피 + 코스닥)")
 
     with ThreadPoolExecutor(max_workers=8) as executor:
         futures = [
             executor.submit(analyze_stock, code, name)
             for code, name in tasks
         ]
-
-        for i, future in enumerate(as_completed(futures)):
+        
+        # 분석 결과를 수집합니다.
+        for future in futures:
             res = future.result()
             if res:
                 results.append(res)
 
-            if (i + 1) % 200 == 0:
-                print(f"{i+1}/{len(tasks)} 진행 중")
+    # 결과 출력 및 저장 (이 아랫부분은 기존 코드와 동일하게 유지하세요)
+    if results:
+        df_res = pd.DataFrame(results)
+        print(df_res)
+    else:
+        print("조건에 맞는 종목이 없습니다.")
 
-    if not results:
-        print("조건 충족 종목 없음")
-        return
-
-    df = (
-        pd.DataFrame(results)
-        .sort_values("RelVolume", ascending=False)
-        .reset_index(drop=True)
-    )
-
-    filename = f"돌파_사이징_{market}_{datetime.now().strftime('%m%d')}.csv"
-    df.to_csv(filename, index=False, encoding="utf-8-sig")
-
-    print(f"\n총 {len(df)}개 종목 추출 완료")
-    print(df.head(10))
-
-  
-
-# ============================================================
-# 실행
-# ============================================================
 if __name__ == "__main__":
     main()
