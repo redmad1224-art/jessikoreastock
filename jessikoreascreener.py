@@ -19,7 +19,7 @@ import pandas as pd
 import FinanceDataReader as fdr
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from google.colab import files
+
 
 # ============================================================
 # ⚙️ 계좌 설정 (여기만 네 상황에 맞게 수정)
@@ -170,7 +170,7 @@ def main():
     print(f"\n총 {len(df)}개 종목 추출 완료")
     print(df.head(10))
 
-    files.download(filename)
+  
 
 # ============================================================
 # 실행
